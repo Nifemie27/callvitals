@@ -54,7 +54,12 @@ function SortHeader({
   const Icon = isActive ? (direction === "asc" ? ArrowUp : ArrowDown) : ChevronsUpDown;
 
   return (
-    <TableHead className={className}>
+    <TableHead
+      className={className}
+      aria-sort={
+        isActive ? (direction === "asc" ? "ascending" : "descending") : "none"
+      }
+    >
       <button
         type="button"
         onClick={() => onSort(sortKey)}
@@ -64,7 +69,7 @@ function SortHeader({
         )}
       >
         {label}
-        <Icon className="size-3" strokeWidth={2} />
+        <Icon className="size-3" strokeWidth={2} aria-hidden="true" />
       </button>
     </TableHead>
   );

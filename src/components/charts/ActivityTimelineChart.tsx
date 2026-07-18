@@ -15,8 +15,17 @@ const chartConfig = {
 
 export function ActivityTimelineChart({ data }: { data: HourlyCallVolume[] }) {
   return (
-    <ChartContainer config={chartConfig} className="aspect-auto h-[220px] w-full">
-      <AreaChart data={data} margin={{ left: -20, right: 12, top: 8, bottom: 0 }}>
+    <ChartContainer
+      config={chartConfig}
+      className="aspect-auto h-[220px] w-full"
+      role="img"
+      aria-label="Line chart of call volume by hour of day, aggregated across the sample, in UTC"
+    >
+      <AreaChart
+        accessibilityLayer
+        data={data}
+        margin={{ left: -20, right: 12, top: 8, bottom: 0 }}
+      >
         <CartesianGrid vertical={false} />
         <XAxis
           dataKey="hour"

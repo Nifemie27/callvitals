@@ -42,7 +42,7 @@ export function ReportsPage() {
             disabled={!records?.length}
             onClick={() => records && exportCallRecordsToCsv(records)}
           >
-            <Download />
+            <Download aria-hidden="true" />
             Export CSV
           </Button>
           <Button
@@ -51,7 +51,7 @@ export function ReportsPage() {
             disabled={!records?.length}
             onClick={() => window.print()}
           >
-            <Printer />
+            <Printer aria-hidden="true" />
             Export PDF
           </Button>
         </div>

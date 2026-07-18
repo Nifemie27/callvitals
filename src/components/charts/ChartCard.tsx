@@ -28,7 +28,7 @@ export function ChartCard({
   return (
     <Card className={cn("gap-1 px-4.5 pt-4 pb-3", className)}>
       <div className="mb-1.5 flex items-baseline justify-between gap-3">
-        <h3 className="text-[13.5px] font-semibold">{title}</h3>
+        <h2 className="text-[13.5px] font-semibold">{title}</h2>
         {meta && (
           <span className="shrink-0 text-[11.5px] text-muted-foreground">
             {meta}

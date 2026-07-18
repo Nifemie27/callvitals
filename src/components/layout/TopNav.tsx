@@ -24,13 +24,13 @@ export function TopNav() {
         </div>
       </div>
 
-      <div className="ml-2 hidden w-[280px] items-center gap-2 rounded-lg border bg-secondary px-2.5 py-1.5 text-muted-foreground sm:flex">
-        <Search className="size-3.5 shrink-0" />
+      <div className="ml-2 hidden w-[280px] items-center gap-2 rounded-lg border bg-secondary px-2.5 py-1.5 text-muted-foreground focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring sm:flex">
+        <Search className="size-3.5 shrink-0" aria-hidden="true" />
         <Input
           type="text"
           placeholder="Search caller, number, city…"
           aria-label="Search calls"
-          className="h-auto border-0 bg-transparent p-0 text-[13px] shadow-none focus-visible:ring-0"
+          className="h-auto border-0 bg-transparent p-0 text-[13px] shadow-none outline-none focus-visible:ring-0 focus-visible:outline-none"
         />
       </div>
 
@@ -43,7 +43,7 @@ export function TopNav() {
         title="Refresh data"
         onClick={() => queryClient.invalidateQueries({ queryKey: ["cdr"] })}
       >
-        <RefreshCw className="size-4" />
+        <RefreshCw className="size-4" aria-hidden="true" />
       </Button>
 
       <Button
@@ -54,13 +54,13 @@ export function TopNav() {
         onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
       >
         {resolvedTheme === "dark" ? (
-          <Sun className="size-4" />
+          <Sun className="size-4" aria-hidden="true" />
         ) : (
-          <Moon className="size-4" />
+          <Moon className="size-4" aria-hidden="true" />
         )}
       </Button>
 
-      <Avatar className="size-8">
+      <Avatar className="size-8" aria-hidden="true">
         <AvatarFallback>
           <User className="size-4" />
         </AvatarFallback>

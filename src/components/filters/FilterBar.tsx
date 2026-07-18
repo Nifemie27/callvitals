@@ -127,7 +127,7 @@ export function FilterBar({ records }: FilterBarProps) {
 
       {hasActiveFilters && (
         <Button size="sm" variant="ghost" className="h-7 gap-1 text-xs" onClick={reset}>
-          <X className="size-3.5" />
+          <X className="size-3.5" aria-hidden="true" />
           Reset filters
         </Button>
       )}

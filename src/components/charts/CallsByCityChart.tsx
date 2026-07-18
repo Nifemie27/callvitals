@@ -1,5 +1,13 @@
 import { useMemo } from "react";
-import { Bar, BarChart, CartesianGrid, Cell, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Rectangle,
+  XAxis,
+  YAxis,
+  type BarShapeProps,
+} from "recharts";
 import {
   ChartContainer,
   ChartTooltip,
@@ -15,6 +23,17 @@ const chartConfig = {
 
 interface CallsByCityChartProps {
   grouping: ReturnType<typeof callsByCity>;
+}
+
+function CityBar(props: BarShapeProps) {
+  const isOther = Boolean((props.payload as { isOther?: boolean })?.isOther);
+  return (
+    <Rectangle
+      {...props}
+      fill={isOther ? CHART_OTHER_COLOR : "var(--color-calls)"}
+      fillOpacity={isOther ? 0.6 : 1}
+    />
+  );
 }
 
 export function CallsByCityChart({ grouping }: CallsByCityChartProps) {
@@ -35,8 +54,14 @@ export function CallsByCityChart({ grouping }: CallsByCityChartProps) {
   }, [grouping]);
 
   return (
-    <ChartContainer config={chartConfig} className="aspect-auto h-[200px] w-full">
+    <ChartContainer
+      config={chartConfig}
+      className="aspect-auto h-[200px] w-full"
+      role="img"
+      aria-label="Horizontal bar chart of call volume by city, with the long tail folded into an Other bucket"
+    >
       <BarChart
+        accessibilityLayer
         data={data}
         layout="vertical"
         margin={{ left: 4, right: 24, top: 4, bottom: 4 }}
@@ -52,15 +77,12 @@ export function CallsByCityChart({ grouping }: CallsByCityChartProps) {
           tick={{ fontSize: 11 }}
         />
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-        <Bar dataKey="calls" radius={[0, 4, 4, 0]} maxBarSize={18}>
-          {data.map((row) => (
-            <Cell
-              key={row.city}
-              fill={row.isOther ? CHART_OTHER_COLOR : "var(--color-calls)"}
-              fillOpacity={row.isOther ? 0.6 : 1}
-            />
-          ))}
-        </Bar>
+        <Bar
+          dataKey="calls"
+          radius={[0, 4, 4, 0]}
+          maxBarSize={18}
+          shape={CityBar}
+        />
       </BarChart>
     </ChartContainer>
   );

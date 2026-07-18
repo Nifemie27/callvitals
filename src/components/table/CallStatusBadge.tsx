@@ -6,7 +6,7 @@ export function CallStatusBadge({ isSuccessful }: { isSuccessful: boolean }) {
   if (isSuccessful) {
     return (
       <Badge className={cn("border-transparent bg-good/10 text-good")}>
-        <CheckCircle2 />
+        <CheckCircle2 aria-hidden="true" />
         Successful
       </Badge>
     );
@@ -14,7 +14,7 @@ export function CallStatusBadge({ isSuccessful }: { isSuccessful: boolean }) {
 
   return (
     <Badge variant="destructive">
-      <XCircle />
+      <XCircle aria-hidden="true" />
       Failed
     </Badge>
   );

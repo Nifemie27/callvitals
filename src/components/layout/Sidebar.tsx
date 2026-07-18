@@ -36,7 +36,7 @@ export function Sidebar() {
               )
             }
           >
-            <item.icon className="size-[17px]" strokeWidth={1.8} />
+            <item.icon className="size-[17px]" strokeWidth={1.8} aria-hidden="true" />
             {item.label}
           </NavLink>
         ))}

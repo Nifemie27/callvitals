@@ -15,8 +15,14 @@ const chartConfig = {
 
 export function CostByCityChart({ data }: { data: CityCost[] }) {
   return (
-    <ChartContainer config={chartConfig} className="aspect-auto h-[240px] w-full">
+    <ChartContainer
+      config={chartConfig}
+      className="aspect-auto h-[240px] w-full"
+      role="img"
+      aria-label="Horizontal bar chart of the top cities by total call cost"
+    >
       <BarChart
+        accessibilityLayer
         data={data}
         layout="vertical"
         margin={{ left: 4, right: 16, top: 4, bottom: 4 }}

@@ -52,7 +52,7 @@ export function SettingsPage() {
                     "bg-card text-foreground shadow-sm",
                 )}
               >
-                <option.icon className="size-3.5" />
+                <option.icon className="size-3.5" aria-hidden="true" />
                 {option.label}
               </Button>
             ))}
