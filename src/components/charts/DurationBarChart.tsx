@@ -23,7 +23,7 @@ export function DurationBarChart({ data }: { data: DurationBucket[] }) {
       <BarChart
         accessibilityLayer
         data={data}
-        margin={{ left: -20, right: 8, top: 8, bottom: 0 }}
+        margin={{ left: 0, right: 8, top: 8, bottom: 0 }}
       >
         <CartesianGrid vertical={false} />
         <XAxis dataKey="label" tickLine={false} axisLine={false} tickMargin={8} />

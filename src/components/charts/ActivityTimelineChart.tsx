@@ -24,7 +24,7 @@ export function ActivityTimelineChart({ data }: { data: HourlyCallVolume[] }) {
       <AreaChart
         accessibilityLayer
         data={data}
-        margin={{ left: -20, right: 12, top: 8, bottom: 0 }}
+        margin={{ left: 0, right: 12, top: 8, bottom: 0 }}
       >
         <CartesianGrid vertical={false} />
         <XAxis
