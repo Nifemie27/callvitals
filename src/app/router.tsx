@@ -1,10 +1,20 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { AppShell } from "@/components/layout/AppShell";
 import { DashboardPage } from "@/pages/DashboardPage";
-import { AnalyticsPage } from "@/pages/AnalyticsPage";
-import { ReportsPage } from "@/pages/ReportsPage";
-import { SettingsPage } from "@/pages/SettingsPage";
-import { NotFoundPage } from "@/pages/NotFoundPage";
+
+const AnalyticsPage = lazy(() =>
+  import("@/pages/AnalyticsPage").then((m) => ({ default: m.AnalyticsPage })),
+);
+const ReportsPage = lazy(() =>
+  import("@/pages/ReportsPage").then((m) => ({ default: m.ReportsPage })),
+);
+const SettingsPage = lazy(() =>
+  import("@/pages/SettingsPage").then((m) => ({ default: m.SettingsPage })),
+);
+const NotFoundPage = lazy(() =>
+  import("@/pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })),
+);
 
 export const router = createBrowserRouter([
   {

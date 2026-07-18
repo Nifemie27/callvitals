@@ -10,4 +10,10 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Recharts + shadcn + Query + Router are all needed by the default
+    // (Dashboard) route, so route-level code-splitting doesn't reduce this —
+    // it's the expected weight of a chart-heavy dashboard, not an oversight.
+    chunkSizeWarningLimit: 1000,
+  },
 });
