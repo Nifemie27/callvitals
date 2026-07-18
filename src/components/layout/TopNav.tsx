@@ -6,6 +6,7 @@ import { NAV_ITEMS } from "@/constants/nav";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { MobileNav } from "@/components/layout/MobileNav";
 
 export function TopNav() {
   const { pathname } = useLocation();
@@ -17,7 +18,8 @@ export function TopNav() {
   );
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-3.5 border-b bg-card px-6 print:hidden">
+    <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2.5 border-b bg-card px-4 print:hidden sm:gap-3.5 sm:px-6">
+      <MobileNav />
       <div>
         <div className="text-[15px] font-semibold tracking-tight">
           {activeItem?.label ?? "CallVitals"}
