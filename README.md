@@ -2,7 +2,8 @@
 
 A Call Analytics Dashboard for Call Data Records (CDR) — the kind of internal tool a telecom or VoIP platform would build to monitor call activity, cost, and success rates. Built as a professional, SaaS-style dashboard rather than a minimal assignment submission.
 
-**Live app:** _add your Vercel URL here after deploying_
+**Live app:** https://callvitals.vercel.app
+**Repository:** https://github.com/Nifemie27/callvitals
 
 ![Dashboard, light mode](docs/screenshots/dashboard-light.png)
 
@@ -125,7 +126,7 @@ src/
 ## Installation
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Nifemie27/callvitals.git
 cd callvitals
 npm install
 ```
@@ -159,6 +160,7 @@ Deployed on Vercel as a static Vite build:
 - **Output directory:** `dist`
 - **Framework preset:** Vite
 - No environment variables are required for the default deployment (the public mock API is used as a fallback); set `VITE_CDR_API_URL` in the Vercel project settings to point at a different data source.
+- **`vercel.json` rewrites every path to `index.html`.** This is a client-side-routed SPA (React Router), so without it, a direct request to `/analytics` or a refresh on `/reports` 404s on Vercel's static host — only `index.html` exists as a real file; the router handles everything past that in the browser.
 
 ## Screenshots
 
