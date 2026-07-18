@@ -17,7 +17,7 @@ export function TopNav() {
   );
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-3.5 border-b bg-card px-6">
+    <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-3.5 border-b bg-card px-6 print:hidden">
       <div>
         <div className="text-[15px] font-semibold tracking-tight">
           {activeItem?.label ?? "CallVitals"}

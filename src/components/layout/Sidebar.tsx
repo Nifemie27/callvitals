@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 export function Sidebar() {
   return (
-    <aside className="sticky top-0 flex h-svh w-[232px] shrink-0 flex-col gap-7 bg-sidebar px-3.5 py-5">
+    <aside className="sticky top-0 flex h-svh w-[232px] shrink-0 flex-col gap-7 bg-sidebar px-3.5 py-5 print:hidden">
       <div className="flex items-center gap-2.5 px-2">
         <div className="flex size-[30px] shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-sidebar-primary to-violet-600">
           <Phone className="size-4 text-white" strokeWidth={2} />

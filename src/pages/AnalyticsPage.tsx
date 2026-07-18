@@ -1,25 +1,55 @@
+import { useMemo } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { Card, CardContent } from "@/components/ui/card";
+import { KpiCardGrid } from "@/components/cards/KpiCardGrid";
+import { ChartsSection } from "@/components/charts/ChartsSection";
+import { FilterBar } from "@/components/filters/FilterBar";
+import { ErrorState } from "@/components/feedback/ErrorState";
+import { useCallRecords } from "@/features/calls/hooks/useCallRecords";
+import { useCallAnalytics } from "@/features/calls/hooks/useCallAnalytics";
+import { useCallFilters } from "@/features/calls/hooks/useCallFilters";
+import { filterRecords } from "@/features/calls/selectors/filtering";
 
 export function AnalyticsPage() {
+  const { data: records, isPending, isError, error, refetch } = useCallRecords();
+  const { filters } = useCallFilters();
+
+  const filteredRecords = useMemo(
+    () => filterRecords(records ?? [], filters),
+    [records, filters],
+  );
+  const analytics = useCallAnalytics(filteredRecords);
+
+  if (isError) {
+    return (
+      <div className="flex flex-col gap-5">
+        <PageHeader
+          title="Analytics"
+          description="Deeper breakdowns with date, city, status, and direction filters."
+        />
+        <ErrorState
+          message={
+            error instanceof Error
+              ? error.message
+              : "Failed to load call records from the CDR API."
+          }
+          onRetry={() => refetch()}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-5">
       <PageHeader
         title="Analytics"
-        description="Deeper breakdowns with date-range, city, status, and direction filters."
+        description="Deeper breakdowns with date, city, status, and direction filters."
       />
-      <Card>
-        <CardContent className="flex flex-col items-center gap-1.5 py-10 text-center">
-          <p className="text-sm text-foreground">
-            This page reuses the dashboard's charts, scoped by a date range,
-            city, call status, and call direction filter.
-          </p>
-          <p className="text-sm text-muted-foreground">
-            It depends on the <code>useCallFilters</code> hook syncing filter
-            state to the URL, built alongside the dashboard.
-          </p>
-        </CardContent>
-      </Card>
+
+      <FilterBar records={records ?? []} />
+
+      <KpiCardGrid metrics={analytics.metrics} isLoading={isPending} />
+
+      <ChartsSection {...analytics} isLoading={isPending} />
     </div>
   );
 }

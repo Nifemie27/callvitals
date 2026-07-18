@@ -73,9 +73,14 @@ function SortHeader({
 interface CallLogsTableProps {
   records: CallRecord[];
   isLoading?: boolean;
+  pageSize?: number;
 }
 
-export function CallLogsTable({ records, isLoading }: CallLogsTableProps) {
+export function CallLogsTable({
+  records,
+  isLoading,
+  pageSize = PAGE_SIZE,
+}: CallLogsTableProps) {
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("startTime");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
@@ -97,11 +102,11 @@ export function CallLogsTable({ records, isLoading }: CallLogsTableProps) {
     return [...filtered].sort((a, b) => (accessor(a) - accessor(b)) * direction);
   }, [filtered, sortKey, sortDirection]);
 
-  const pageCount = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
+  const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const paginated = sorted.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
   );
 
   function handleSort(key: SortKey) {
@@ -223,7 +228,7 @@ export function CallLogsTable({ records, isLoading }: CallLogsTableProps) {
         <TablePagination
           page={currentPage}
           pageCount={pageCount}
-          pageSize={PAGE_SIZE}
+          pageSize={pageSize}
           totalItems={sorted.length}
           onPrev={() => setPage((p) => Math.max(1, p - 1))}
           onNext={() => setPage((p) => Math.min(pageCount, p + 1))}

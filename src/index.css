@@ -135,3 +135,17 @@
     @apply font-sans;
     }
 }
+
+/* Reports export: force light surfaces regardless of active theme, and
+   let the table breathe full-width without the app shell around it. */
+@media print {
+  :root {
+    --background: #ffffff;
+    --foreground: #11141c;
+    --card: #ffffff;
+    --card-foreground: #11141c;
+    --muted: #eef1f6;
+    --muted-foreground: #565d6d;
+    --border: #e1e5ee;
+  }
+}
