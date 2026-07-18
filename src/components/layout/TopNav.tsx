@@ -1,21 +1,30 @@
 import { useLocation } from "react-router-dom";
 import { useTheme } from "next-themes";
-import { useQueryClient } from "@tanstack/react-query";
+import { useIsFetching, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { Search, RefreshCw, Sun, Moon, User } from "lucide-react";
 import { NAV_ITEMS } from "@/constants/nav";
+import { QUERY_KEYS } from "@/constants/query-keys";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { cn } from "@/lib/utils";
 
 export function TopNav() {
   const { pathname } = useLocation();
   const { resolvedTheme, setTheme } = useTheme();
   const queryClient = useQueryClient();
+  const isRefreshing = useIsFetching({ queryKey: QUERY_KEYS.cdr }) > 0;
 
   const activeItem = NAV_ITEMS.find((item) =>
     item.to === "/" ? pathname === "/" : pathname.startsWith(item.to),
   );
+
+  async function handleRefresh() {
+    await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.cdr });
+    toast.success("Call records refreshed");
+  }
 
   return (
     <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2.5 border-b bg-card px-4 print:hidden sm:gap-3.5 sm:px-6">
@@ -43,9 +52,13 @@ export function TopNav() {
         size="icon"
         aria-label="Refresh data"
         title="Refresh data"
-        onClick={() => queryClient.invalidateQueries({ queryKey: ["cdr"] })}
+        disabled={isRefreshing}
+        onClick={handleRefresh}
       >
-        <RefreshCw className="size-4" aria-hidden="true" />
+        <RefreshCw
+          className={cn("size-4", isRefreshing && "animate-spin")}
+          aria-hidden="true"
+        />
       </Button>
 
       <Button
