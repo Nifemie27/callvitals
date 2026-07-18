@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import {
@@ -86,7 +87,8 @@ export function CallLogsTable({
   isLoading,
   pageSize = PAGE_SIZE,
 }: CallLogsTableProps) {
-  const [search, setSearch] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const search = searchParams.get("q") ?? "";
   const [sortKey, setSortKey] = useState<SortKey>("startTime");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [page, setPage] = useState(1);
@@ -124,10 +126,21 @@ export function CallLogsTable({
     setPage(1);
   }
 
-  function handleSearch(value: string) {
-    setSearch(value);
-    setPage(1);
-  }
+  const handleSearch = useCallback(
+    (value: string) => {
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          if (value) next.set("q", value);
+          else next.delete("q");
+          return next;
+        },
+        { replace: true },
+      );
+      setPage(1);
+    },
+    [setSearchParams],
+  );
 
   return (
     <Card className="gap-0 overflow-hidden p-0">
