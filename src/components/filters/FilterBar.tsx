@@ -8,55 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+import { Segmented } from "@/components/ui/segmented";
 import { callsByDay } from "@/features/calls/selectors/grouping";
+import { formatDayLabel } from "@/lib/format/date";
 import type { CallFilters } from "@/features/calls/selectors/filtering";
 import type { CallRecord } from "@/features/calls/types";
 import { useCallFilters } from "@/features/calls/hooks/useCallFilters";
-
-interface SegmentedOption {
-  value: string;
-  label: string;
-}
-
-function Segmented({
-  options,
-  value,
-  onChange,
-}: {
-  options: SegmentedOption[];
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div className="inline-flex gap-1 rounded-lg border bg-secondary p-1">
-      {options.map((option) => (
-        <Button
-          key={option.value}
-          type="button"
-          size="sm"
-          variant="ghost"
-          aria-pressed={value === option.value}
-          onClick={() => onChange(option.value)}
-          className={cn(
-            "h-7 px-2.5 text-xs text-muted-foreground",
-            value === option.value && "bg-card text-foreground shadow-sm",
-          )}
-        >
-          {option.label}
-        </Button>
-      ))}
-    </div>
-  );
-}
-
-function formatDayLabel(day: string): string {
-  return new Date(`${day}T00:00:00Z`).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    timeZone: "UTC",
-  });
-}
 
 interface FilterBarProps {
   records: CallRecord[];

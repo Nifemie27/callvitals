@@ -1,4 +1,4 @@
-import { Phone, CircleDollarSign, Clock, CircleAlert, ArrowLeftRight } from "lucide-react";
+import { Phone, CircleDollarSign, Clock, CircleCheck, CircleX } from "lucide-react";
 import { KpiCard } from "@/components/cards/KpiCard";
 import { formatCurrency } from "@/lib/format/currency";
 import { formatDuration } from "@/lib/format/duration";
@@ -11,10 +11,7 @@ interface KpiCardGridProps {
 
 export function KpiCardGrid({ metrics, isLoading }: KpiCardGridProps) {
   const successPercent = Math.round(metrics.successRate * 100);
-  const outboundPercent =
-    metrics.totalCalls === 0
-      ? 0
-      : Math.round((metrics.outboundCalls / metrics.totalCalls) * 100);
+  const failedPercent = metrics.totalCalls === 0 ? 0 : 100 - successPercent;
 
   return (
     <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 lg:grid-cols-5">
@@ -48,25 +45,22 @@ export function KpiCardGrid({ metrics, isLoading }: KpiCardGridProps) {
         isLoading={isLoading}
       />
       <KpiCard
-        icon={CircleAlert}
-        label="Success rate"
-        value={`${successPercent}%`}
-        subtitle={`${metrics.successfulCalls} of ${metrics.totalCalls} calls completed`}
+        icon={CircleCheck}
+        label="Successful calls"
+        value={metrics.successfulCalls.toLocaleString()}
+        subtitle={`${successPercent}% success rate`}
         tone={metrics.successfulCalls === 0 ? "critical" : "default"}
         isLoading={isLoading}
       />
       <KpiCard
-        icon={ArrowLeftRight}
-        label="Call direction"
-        value={`${outboundPercent}% out`}
-        subtitle={`${metrics.inboundCalls} inbound · ${metrics.outboundCalls} outbound`}
-        extra={
-          <div className="flex h-1.5 overflow-hidden rounded-full bg-secondary">
-            <div
-              className="h-full bg-chart-1"
-              style={{ width: `${outboundPercent}%` }}
-            />
-          </div>
+        icon={CircleX}
+        label="Failed calls"
+        value={metrics.failedCalls.toLocaleString()}
+        subtitle={`${failedPercent}% of total calls`}
+        tone={
+          metrics.failedCalls === metrics.totalCalls && metrics.totalCalls > 0
+            ? "critical"
+            : "default"
         }
         isLoading={isLoading}
       />
