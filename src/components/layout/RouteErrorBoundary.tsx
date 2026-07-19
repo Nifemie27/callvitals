@@ -4,9 +4,15 @@ import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CHUNK_RELOAD_FLAG } from "@/constants/config";
 
+// Matches Chrome ("Failed to fetch dynamically imported module"), Firefox
+// ("Importing a module script failed"), Safari ("Load failed" during an
+// import), and the Vercel-rewrite-era MIME-type mismatch - every phrasing
+// browsers use for the same underlying failure: a lazy route's chunk didn't
+// load. window.addEventListener('vite:preloadError', ...) in main.tsx is the
+// primary defense; this is the fallback for whatever slips past it.
 function isChunkLoadError(error: unknown): boolean {
   const message = error instanceof Error ? error.message : String(error);
-  return /dynamically imported module|not a valid JavaScript MIME type|failed to fetch|loading chunk/i.test(
+  return /dynamically imported module|importing a module script failed|not a valid JavaScript MIME type|failed to fetch|load failed|loading chunk/i.test(
     message,
   );
 }
